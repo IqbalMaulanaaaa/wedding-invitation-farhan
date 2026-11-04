@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { MailOpen, Sparkles } from 'lucide-react';
-import { Monogram } from '../ui/Monogram';
-import { BotanicalCorner } from '../ui/BotanicalCorner';
-import { BotanicalBranch } from '../ui/BotanicalBranch';
 import { weddingData } from '@/data/weddingData';
 
 interface EnvelopeCoverProps {
@@ -28,98 +26,144 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ isOpen, onOpen }) 
   if (isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center texture-paper-bg px-4 py-6 sm:py-10 overflow-hidden">
-      {/* Ambient Lighting & Soft Background Vignette */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/[0.02] to-black/[0.06] pointer-events-none" />
-      <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-sage-200/35 blur-3xl pointer-events-none animate-pulse-slow" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-champagne-200/40 blur-3xl pointer-events-none animate-pulse-slow" />
-
-      {/* Realistic Textured Paper Card */}
-      <div className="relative max-w-md w-full text-center flex flex-col items-center justify-between min-h-[620px] p-6 sm:p-9 rounded-[28px] texture-paper-card animate-fade-in overflow-hidden border border-[#E8E2D2]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center texture-mottled-paper px-3 py-4 sm:p-6 overflow-hidden">
+      {/* Outer Card / Canvas styled exactly like the portrait invitation */}
+      <div className="relative w-full max-w-md h-[94vh] max-h-[820px] texture-mottled-paper rounded-3xl shadow-[0_20px_60px_rgba(60,45,35,0.18)] border border-[#E0D2C5] flex flex-col items-center justify-between p-6 sm:p-8 overflow-hidden select-none animate-fade-in">
         
-        {/* Blind-Embossed Letterpress Inner Margin (Authentic Stationery Border) */}
-        <div className="absolute inset-3 sm:inset-4 rounded-[22px] letterpress-border pointer-events-none z-0" />
-        
-        {/* Subtle Diagonal Envelope Crease Shadows */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-80 h-24 border-b border-black/[0.03] shadow-[0_4px_12px_rgba(0,0,0,0.02)] pointer-events-none transform -rotate-1" />
+        {/* ======================================================== */}
+        {/* 1. FOUR CORNER BOTANICAL ASSETS (Matching Reference)    */}
+        {/* ======================================================== */}
 
-        {/* Four Botanical Floral Corners */}
-        <div className="absolute top-2 left-2 z-10">
-          <BotanicalCorner position="top-left" size={68} />
-        </div>
-        <div className="absolute top-2 right-2 z-10">
-          <BotanicalCorner position="top-right" size={68} />
-        </div>
-        <div className="absolute bottom-2 left-2 z-10">
-          <BotanicalCorner position="bottom-left" size={68} />
-        </div>
-        <div className="absolute bottom-2 right-2 z-10">
-          <BotanicalCorner position="bottom-right" size={68} />
+        {/* Top-Left: Golden Flower (Leaves pointing inward) */}
+        <div className="absolute -top-3 -left-3 w-36 sm:w-44 h-auto pointer-events-none z-10 animate-sway">
+          <Image
+            src="/decorations/golden-flower.webp"
+            alt="Golden Flower Top-Left"
+            width={180}
+            height={180}
+            priority
+            className="w-full h-auto object-contain drop-shadow-xs"
+          />
         </div>
 
-        {/* Top Header Badge */}
-        <div className="relative z-10 space-y-1.5 pt-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/80 border border-sage-200/80 text-sage-800 text-[11px] font-medium tracking-[0.2em] uppercase shadow-[0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-xs">
-            <Sparkles className="w-3 h-3 text-champagne-500" />
-            The Wedding Invitation
-          </div>
-          <p className="font-serif italic text-sage-600 text-sm tracking-wide">
+        {/* Top-Right: Blue Roses & Foliage Bouquet (Cascading downward) */}
+        <div className="absolute -top-4 -right-3 w-36 sm:w-44 h-auto pointer-events-none z-10 animate-sway-reverse">
+          <Image
+            src="/decorations/blue-bouquet.webp"
+            alt="Blue Bouquet Top-Right"
+            width={180}
+            height={220}
+            priority
+            className="w-full h-auto object-contain drop-shadow-xs"
+          />
+        </div>
+
+        {/* Bottom-Left: Blue Roses & Foliage Bouquet (Ascending upward) */}
+        <div className="absolute -bottom-4 -left-3 w-36 sm:w-44 h-auto pointer-events-none z-10 animate-sway">
+          <Image
+            src="/decorations/blue-bouquet.webp"
+            alt="Blue Bouquet Bottom-Left"
+            width={180}
+            height={220}
+            priority
+            className="w-full h-auto object-contain scale-x-[-1] drop-shadow-xs"
+          />
+        </div>
+
+        {/* Bottom-Right: Golden Flower (Leaves pointing inward) */}
+        <div className="absolute -bottom-3 -right-3 w-36 sm:w-44 h-auto pointer-events-none z-10 animate-sway-reverse">
+          <Image
+            src="/decorations/golden-flower.webp"
+            alt="Golden Flower Bottom-Right"
+            width={180}
+            height={180}
+            priority
+            className="w-full h-auto object-contain scale-x-[-1] drop-shadow-xs"
+          />
+        </div>
+
+        {/* ======================================================== */}
+        {/* 2. TOP SUBTITLE: ANDA DI UNDANG                          */}
+        {/* ======================================================== */}
+        <div className="relative z-20 pt-6 sm:pt-8 text-center">
+          <p className="font-sans text-xs sm:text-sm tracking-[0.38em] uppercase font-medium text-[#4E453D]">
+            Anda Di Undang
+          </p>
+          <p className="font-serif italic text-xs tracking-widest text-[#7E7368] mt-0.5">
             Walimatul &apos;Ursy
           </p>
         </div>
 
-        {/* Center: Wreath Monogram & Names */}
-        <div className="relative z-10 my-auto py-3 flex flex-col items-center">
-          <div className="relative mb-2">
-            <Monogram size="lg" className="hover:scale-105 transition-transform duration-500 drop-shadow-xs" />
+        {/* ======================================================== */}
+        {/* 3. CENTER WREATH & NAMES: PEPY & FARHAN                  */}
+        {/* ======================================================== */}
+        <div className="relative z-20 my-auto flex flex-col items-center justify-center w-full max-w-[290px] sm:max-w-[320px] aspect-square">
+          {/* Circular Botanical Gold Wreath Asset */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <Image
+              src="/decorations/wreath.webp"
+              alt="Wreath Gold & Foliage"
+              width={340}
+              height={340}
+              priority
+              className="w-full h-full object-contain drop-shadow-sm animate-spin-slow"
+              style={{ animationDuration: '40s' }}
+            />
           </div>
 
-          <BotanicalBranch
-            variant="crest"
-            width={52}
-            className="mb-1.5 opacity-90 hover:scale-110 transition-transform duration-300"
-          />
-
-          <h1 className="font-serif text-3xl sm:text-4xl text-charcoal-900 tracking-tight leading-tight drop-shadow-xs font-normal">
-            Pepy Ariska
-          </h1>
-          <span className="font-serif italic text-champagne-600 text-xl my-0.5 select-none">&amp;</span>
-          <h1 className="font-serif text-3xl sm:text-4xl text-charcoal-900 tracking-tight leading-tight drop-shadow-xs font-normal">
-            Muhammad Farhan
-          </h1>
-
-          <div className="inline-block mt-3 px-3 py-0.5 rounded-full bg-sage-100/60 border border-sage-200/60">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-sage-700 font-sans font-medium">
-              {weddingData.event.dateFormatted}
-            </p>
+          {/* Bold Serif Typography (Matching Claudia & Daniel) */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+            <h1 className="font-serif font-bold text-3xl sm:text-4xl tracking-[0.16em] text-[#2B231D] uppercase leading-none drop-shadow-xs">
+              Pepy
+            </h1>
+            <span className="font-serif italic text-2xl sm:text-3xl text-[#53473D] my-1 leading-none select-none">
+              &amp;
+            </span>
+            <h1 className="font-serif font-bold text-3xl sm:text-4xl tracking-[0.16em] text-[#2B231D] uppercase leading-none drop-shadow-xs">
+              Farhan
+            </h1>
           </div>
         </div>
 
-        {/* Bottom: Embossed Guest Greeting Tag & Open Button */}
-        <div className="relative z-10 w-full space-y-3.5 pt-2">
-          {/* Paper Label Tag */}
-          <div className="p-3.5 rounded-2xl bg-white/85 border border-[#E5DFC9] shadow-[inset_0_1px_3px_rgba(0,0,0,0.04),_0_2px_6px_rgba(0,0,0,0.02)] backdrop-blur-xs">
-            <p className="text-[10px] uppercase tracking-wider text-sage-600 font-sans font-medium">
+        {/* ======================================================== */}
+        {/* 4. BOTTOM SECTION: DATE, VENUE & INTERACTIVE BUTTON      */}
+        {/* ======================================================== */}
+        <div className="relative z-20 w-full text-center space-y-3 pb-2 sm:pb-4">
+          {/* Date & Location (Matching Reference Style) */}
+          <div className="space-y-0.5">
+            <p className="font-sans text-xs sm:text-sm tracking-[0.24em] uppercase font-semibold text-[#443C34]">
+              {weddingData.event.dayFormatted} {weddingData.event.dateFormatted}
+            </p>
+            <p className="font-sans text-[11px] sm:text-xs text-[#6E645A] tracking-wider font-normal">
+              Mendawai, Kotawaringin Barat, Kalteng
+            </p>
+          </div>
+
+          {/* Guest Name Plaque */}
+          <div className="max-w-[270px] mx-auto py-2 px-3 rounded-xl bg-white/70 backdrop-blur-xs border border-[#DFD1C2] shadow-xs">
+            <p className="text-[10px] tracking-wider uppercase text-[#73685E] font-sans">
               Kepada Yth. Bapak/Ibu/Saudara/i:
             </p>
-            <p className="font-serif text-lg font-semibold text-charcoal-900 mt-0.5 truncate tracking-wide">
+            <p className="font-serif font-semibold text-base text-[#2C241E] truncate mt-0.5">
               {guestName}
             </p>
           </div>
 
-          {/* Luxury Seal-Style Button */}
-          <button
-            onClick={onOpen}
-            className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sage-700 via-sage-700 to-sage-800 hover:from-sage-800 hover:to-sage-900 text-white font-sans text-sm font-medium tracking-wide shadow-[0_8px_20px_-4px_rgba(72,91,70,0.35),_inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group cursor-pointer"
-          >
-            <MailOpen className="w-4 h-4 text-champagne-300 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
-            <span>Buka Undangan</span>
-          </button>
-
-          <p className="text-[10px] text-sage-500 italic select-none">
-            *Sentuh untuk membuka undangan &amp; memutar musik
-          </p>
+          {/* Interactive "Buka Undangan" Button */}
+          <div className="pt-1">
+            <button
+              onClick={onOpen}
+              className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-[#4E5B4B] hover:bg-[#3D473A] text-white font-sans text-xs sm:text-sm font-medium tracking-wider uppercase shadow-md shadow-[#4E5B4B]/30 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer group"
+            >
+              <MailOpen className="w-4 h-4 text-champagne-300 transition-transform group-hover:rotate-12" />
+              <span>Buka Undangan</span>
+            </button>
+            <p className="text-[9px] text-[#7C7166] italic mt-1.5">
+              *Sentuh untuk membuka undangan &amp; memutar musik
+            </p>
+          </div>
         </div>
+
       </div>
     </div>
   );
