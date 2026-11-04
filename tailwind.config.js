@@ -51,6 +51,7 @@ module.exports = {
         'spin-slow': 'spin 14s linear infinite',
         'sway': 'sway 6s ease-in-out infinite',
         'sway-reverse': 'swayReverse 7s ease-in-out infinite',
+        'wreath-sway': 'wreathSway 7s ease-in-out infinite',
         'float': 'float 5s ease-in-out infinite',
         'float-slow': 'float 8s ease-in-out infinite',
         'shimmer': 'shimmer 2.5s ease-in-out infinite',
@@ -71,6 +72,10 @@ module.exports = {
         swayReverse: {
           '0%, 100%': { transform: 'rotate(3deg) translateY(0)' },
           '50%': { transform: 'rotate(-4deg) translateY(-6px)' },
+        },
+        wreathSway: {
+          '0%, 100%': { transform: 'rotate(-2.5deg) scale(1)' },
+          '50%': { transform: 'rotate(2.5deg) scale(1.02)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
