@@ -85,7 +85,7 @@ export const weddingData: WeddingData = {
   gifts: [
     {
       bankName: "Bank Rakyat Indonesia (BRI)",
-      accountNumber: "028202010501535",
+      accountNumber: "028201020501535",
       accountHolder: "M. Farhan",
       category: "bank",
     },
