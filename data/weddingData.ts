@@ -35,7 +35,7 @@ export interface WeddingData {
     bankName: string;
     accountNumber: string;
     accountHolder: string;
-    category?: 'bank' | 'ewallet';
+    category?: "bank" | "ewallet";
     giftAddress?: string;
   }[];
   audio: {
@@ -67,7 +67,8 @@ export const weddingData: WeddingData = {
     timeFormatted: "Pukul 09.00 WIB s/d Selesai",
     targetIsoDate: "2026-11-08T09:00:00+07:00",
     venueName: "Kediaman Mempelai / Lokasi Acara",
-    address: "8J89+FC9, Mendawai, Kec. Arut Sel., Kabupaten Kotawaringin Barat, Kalimantan Tengah 74112",
+    address:
+      "8J89+FC9, Mendawai, Kec. Arut Sel., Kabupaten Kotawaringin Barat, Kalimantan Tengah 74112",
     mapsUrl: "https://maps.app.goo.gl/Wj3wTXy5s8vMuoR78",
     googleCalendarUrl:
       "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Pepy+Ariska+%26+Muhammad+Farhan&dates=20261108T020000Z/20261108T070000Z&details=Walimatul+%27Ursy+Pepy+Ariska+%26+Muhammad+Farhan.+Kehadiran+dan+doa+restu+Anda+merupakan+kehormatan+dan+kebahagiaan+bagi+kami.&location=Mendawai%2C+Kec.+Arut+Sel.%2C+Kabupaten+Kotawaringin+Barat%2C+Kalimantan+Tengah+74112",
@@ -109,7 +110,7 @@ export const weddingData: WeddingData = {
   ],
   audio: {
     // Elegant, copyright-free piano instrumental
-    url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3",
+    url: "/audio/bgm.mp3",
     title: "Romantic Piano Melody",
   },
 };
