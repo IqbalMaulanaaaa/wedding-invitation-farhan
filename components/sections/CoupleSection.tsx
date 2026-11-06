@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { BotanicalDivider } from '../ui/BotanicalDivider';
 import { BotanicalCorner } from '../ui/BotanicalCorner';
 import { BotanicalBranch } from '../ui/BotanicalBranch';
@@ -45,9 +46,9 @@ export const CoupleSection: React.FC = () => {
               </div>
 
               <div className="relative z-10 flex flex-col items-center">
-                {/* Monogram Badge */}
-                <div className="w-16 h-16 rounded-full bg-sage-50 border border-sage-200 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:border-sage-300 transition-all duration-500 shadow-sm">
-                  <span className="font-serif text-2xl text-sage-700 font-semibold">P</span>
+                {/* Photo */}
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mb-5 group-hover:scale-105 transition-all duration-500">
+                  <Image src="/photos/pepy.webp" alt="Pepy Ariska" fill className="object-cover object-top" sizes="128px" />
                 </div>
 
                 <span className="text-[11px] uppercase tracking-widest text-champagne-600 font-semibold mb-2">
@@ -83,9 +84,9 @@ export const CoupleSection: React.FC = () => {
               </div>
 
               <div className="relative z-10 flex flex-col items-center">
-                {/* Monogram Badge */}
-                <div className="w-16 h-16 rounded-full bg-sage-50 border border-sage-200 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:border-sage-300 transition-all duration-500 shadow-sm">
-                  <span className="font-serif text-2xl text-sage-700 font-semibold">F</span>
+                {/* Photo */}
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg mb-5 group-hover:scale-105 transition-all duration-500">
+                  <Image src="/photos/farhan.webp" alt="Muhammad Farhan" fill className="object-cover object-top" sizes="128px" />
                 </div>
 
                 <span className="text-[11px] uppercase tracking-widest text-champagne-600 font-semibold mb-2">
