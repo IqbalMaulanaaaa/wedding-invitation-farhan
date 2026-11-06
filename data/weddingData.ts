@@ -30,11 +30,13 @@ export interface WeddingData {
     arabic: string;
     translation: string;
   };
+  physicalGiftAddress: string;
   gifts: {
     bankName: string;
     accountNumber: string;
     accountHolder: string;
-    giftAddress: string;
+    category?: 'bank' | 'ewallet';
+    giftAddress?: string;
   }[];
   audio: {
     url: string;
@@ -77,13 +79,32 @@ export const weddingData: WeddingData = {
     translation:
       "“Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.”",
   },
+  physicalGiftAddress:
+    "8J89+FC9, Mendawai, Kec. Arut Sel., Kabupaten Kotawaringin Barat, Kalimantan Tengah 74112",
   gifts: [
     {
+      bankName: "Bank Rakyat Indonesia (BRI)",
+      accountNumber: "028202010501535",
+      accountHolder: "M. Farhan",
+      category: "bank",
+    },
+    {
       bankName: "Bank Central Asia (BCA)",
-      accountNumber: "8585",
-      accountHolder: "Muhammad Farhan",
-      giftAddress:
-        "8J89+FC9, Mendawai, Kec. Arut Sel., Kabupaten Kotawaringin Barat, Kalimantan Tengah 74112",
+      accountNumber: "8880610644",
+      accountHolder: "Pepy Ariska",
+      category: "bank",
+    },
+    {
+      bankName: "GoPay",
+      accountNumber: "085849111359",
+      accountHolder: "M. Farhan",
+      category: "ewallet",
+    },
+    {
+      bankName: "Bank Aladin Syariah",
+      accountNumber: "50020629201",
+      accountHolder: "Pepy Ariska",
+      category: "bank",
     },
   ],
   audio: {

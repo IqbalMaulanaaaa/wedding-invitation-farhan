@@ -6,7 +6,7 @@ import { BotanicalCorner } from '../ui/BotanicalCorner';
 import { BotanicalBranch } from '../ui/BotanicalBranch';
 import { ScrollReveal } from '../ui/ScrollReveal';
 import { weddingData } from '@/data/weddingData';
-import { Gift, Copy, Check, CreditCard } from 'lucide-react';
+import { Gift, Copy, Check, CreditCard, Smartphone } from 'lucide-react';
 
 export const GiftSection: React.FC = () => {
   const [copiedBank, setCopiedBank] = useState<string | null>(null);
@@ -39,51 +39,59 @@ export const GiftSection: React.FC = () => {
               Amplop Digital &amp; Kado
             </h2>
             <BotanicalDivider />
-            <p className="text-xs sm:text-sm text-sage-600 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-sage-600 max-w-md mx-auto leading-relaxed">
               Doa restu Anda merupakan karunia yang paling berarti bagi kami. Namun jika Anda bermaksud memberikan tanda kasih, Anda dapat menyampaikannya melalui:
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Bank & Gift Cards */}
-        <div className="max-w-md mx-auto space-y-6">
+        {/* Bank & e-Wallet Cards Grid (4 Accounts) */}
+        <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           {weddingData.gifts.map((item, idx) => {
             const isCopied = copiedBank === item.accountNumber;
+            const isEwallet = item.category === 'ewallet' || item.bankName.toLowerCase().includes('gopay');
+            
             return (
-              <ScrollReveal key={idx} delay={200} direction="up">
-                <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white via-[#FAF9F5] to-sage-50 border border-sage-200 shadow-[0_15px_40px_-5px_rgba(114,140,112,0.1)] text-left space-y-4 overflow-hidden group hover:shadow-xl transition-all duration-500">
+              <ScrollReveal key={idx} delay={150 + idx * 80} direction="up">
+                <div className="relative h-full p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-white via-[#FAF9F5] to-sage-50/70 border border-sage-200/90 shadow-[0_12px_30px_-5px_rgba(114,140,112,0.08)] text-left flex flex-col justify-between space-y-4 overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   
                   {/* Subtle Botanical Corner Watermark */}
-                  <div className="absolute top-1 right-1 z-0 opacity-40 group-hover:opacity-75 transition-opacity">
-                    <BotanicalCorner position="top-right" size={68} />
+                  <div className="absolute -top-1 -right-1 z-0 opacity-30 group-hover:opacity-60 transition-opacity">
+                    <BotanicalCorner position="top-right" size={56} />
                   </div>
 
-                  <div className="relative z-10 flex items-center justify-between">
+                  {/* Header: Bank Name & Badge */}
+                  <div className="relative z-10 flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-sage-600" />
-                      <span className="font-serif text-lg font-semibold text-charcoal-900">
+                      {isEwallet ? (
+                        <Smartphone className="w-4 h-4 text-sage-600 shrink-0" />
+                      ) : (
+                        <CreditCard className="w-4 h-4 text-sage-600 shrink-0" />
+                      )}
+                      <span className="font-serif text-base sm:text-lg font-semibold text-charcoal-900 leading-tight">
                         {item.bankName}
                       </span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider text-sage-600 font-medium px-2.5 py-1 rounded-full bg-white border border-sage-200 shadow-sm">
-                      Transfer Bank
+                    <span className="text-[9px] uppercase tracking-wider text-sage-700 font-semibold px-2 py-0.5 rounded-full bg-white/90 border border-sage-200 shadow-xs shrink-0">
+                      {isEwallet ? 'E-Wallet' : 'Transfer'}
                     </span>
                   </div>
 
-                  <div className="relative z-10 space-y-1 pt-2">
-                    <span className="text-[11px] text-sage-500 uppercase tracking-wider">
-                      Nomor Rekening
+                  {/* Body: Account Number & Copy Button */}
+                  <div className="relative z-10 space-y-1.5 pt-1">
+                    <span className="text-[10px] text-sage-500 uppercase tracking-wider font-sans font-medium">
+                      {isEwallet ? 'Nomor E-Wallet / HP' : 'Nomor Rekening'}
                     </span>
-                    <div className="flex items-center justify-between">
-                      <p className="font-mono text-2xl font-bold text-charcoal-900 tracking-wider">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-mono text-lg sm:text-xl font-bold text-charcoal-900 tracking-wider select-all truncate">
                         {item.accountNumber}
                       </p>
                       <button
                         onClick={() => handleCopyBank(item.accountNumber)}
-                        className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 ${
+                        className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer ${
                           isCopied
                             ? 'bg-sage-700 text-white shadow-sm'
-                            : 'bg-white hover:bg-sage-100 text-sage-700 border border-sage-200 shadow-sm'
+                            : 'bg-white hover:bg-sage-100 text-sage-700 border border-sage-200 shadow-xs active:scale-95'
                         }`}
                       >
                         {isCopied ? (
@@ -94,22 +102,24 @@ export const GiftSection: React.FC = () => {
                         ) : (
                           <>
                             <Copy className="w-3.5 h-3.5" />
-                            <span>Salin No. Rek</span>
+                            <span>Salin</span>
                           </>
                         )}
                       </button>
                     </div>
-                    <p className="text-xs text-sage-700 font-medium pt-1">
-                      Atas Nama: <span className="font-semibold text-charcoal-900">{item.accountHolder}</span>
+                    <p className="text-xs text-sage-700 font-sans pt-0.5">
+                      a.n. <span className="font-semibold text-charcoal-900">{item.accountHolder}</span>
                     </p>
                   </div>
                 </div>
               </ScrollReveal>
             );
           })}
+        </div>
 
-          {/* Physical Gift Option */}
-          <ScrollReveal delay={300} direction="up">
+        {/* Physical Gift Option */}
+        <div className="max-w-2xl mx-auto">
+          <ScrollReveal delay={450} direction="up">
             <div className="p-6 rounded-3xl bg-white border border-sage-200/90 shadow-sm text-left space-y-3 relative overflow-hidden group hover:border-sage-300 transition-colors">
               <div className="absolute bottom-1 right-1 z-0 opacity-30">
                 <BotanicalCorner position="bottom-right" size={54} />
@@ -121,17 +131,17 @@ export const GiftSection: React.FC = () => {
                   Kirim Kado Fisik
                 </span>
               </div>
-              <p className="relative z-10 text-xs text-sage-600 leading-relaxed">
-                {weddingData.gifts[0].giftAddress}
+              <p className="relative z-10 text-xs sm:text-sm text-sage-600 leading-relaxed font-sans">
+                {weddingData.physicalGiftAddress}
               </p>
               <button
-                onClick={() => handleCopyAddress(weddingData.gifts[0].giftAddress)}
-                className="relative z-10 inline-flex items-center gap-1.5 text-xs text-sage-700 hover:text-sage-900 font-medium transition-colors"
+                onClick={() => handleCopyAddress(weddingData.physicalGiftAddress)}
+                className="relative z-10 inline-flex items-center gap-1.5 text-xs text-sage-700 hover:text-sage-900 font-medium transition-colors cursor-pointer"
               >
                 {copiedAddress ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-sage-600" />
-                    <span className="text-sage-700">Alamat Berhasil Disalin!</span>
+                    <span className="text-sage-700 font-semibold">Alamat Berhasil Disalin!</span>
                   </>
                 ) : (
                   <>
