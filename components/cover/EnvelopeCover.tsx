@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import { MailOpen } from 'lucide-react';
+import { MailOpen, Pencil, Check } from 'lucide-react';
 import { weddingData } from '@/data/weddingData';
 
 interface EnvelopeCoverProps {
@@ -11,17 +11,47 @@ interface EnvelopeCoverProps {
 }
 
 export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ isOpen, onOpen }) => {
-  const [guestName, setGuestName] = useState<string>('Tamu Undangan');
+  const [guestName, setGuestName] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [hasName, setHasName] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const to = params.get('to');
-      if (to) {
-        setGuestName(to);
+      if (to && to.trim()) {
+        const decoded = decodeURIComponent(to.trim());
+        setGuestName(decoded);
+        setInputValue(decoded);
+        setHasName(true);
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  const handleConfirmName = () => {
+    const trimmed = inputValue.trim();
+    if (trimmed) {
+      setGuestName(trimmed);
+      setHasName(true);
+    }
+    setIsEditing(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') handleConfirmName();
+    if (e.key === 'Escape') {
+      setInputValue(guestName);
+      setIsEditing(false);
+    }
+  };
 
   if (isOpen) return null;
 
@@ -137,13 +167,45 @@ export const EnvelopeCover: React.FC<EnvelopeCoverProps> = ({ isOpen, onOpen }) 
         </div>
 
         {/* Guest Name Plaque */}
-        <div className="max-w-[250px] sm:max-w-[280px] mx-auto py-1.5 px-3 rounded-xl bg-white/80 backdrop-blur-xs border border-[#DFD1C2] shadow-xs">
-          <p className="text-[9px] sm:text-[10px] tracking-wider uppercase text-[#73685E] font-sans font-medium">
-            Kepada Yth. Bapak/Ibu/Saudara/i:
-          </p>
-          <p className="font-serif font-semibold text-sm sm:text-base text-[#2C241E] truncate mt-0.5">
-            {guestName}
-          </p>
+        <div className="max-w-[270px] sm:max-w-[300px] mx-auto">
+          {isEditing ? (
+            /* ── INPUT MODE ── */
+            <div className="flex items-center gap-2 py-1.5 px-3 rounded-xl bg-white/90 backdrop-blur-xs border border-[#C5A880] shadow-sm">
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                maxLength={40}
+                placeholder="Ketik nama Anda..."
+                className="flex-1 bg-transparent font-serif text-sm sm:text-base text-[#2C241E] placeholder:text-[#A89C93] outline-none min-w-0"
+              />
+              <button
+                onClick={handleConfirmName}
+                className="flex-shrink-0 w-7 h-7 rounded-full bg-[#4E5B4B] flex items-center justify-center hover:bg-[#3D473A] transition-colors active:scale-95"
+              >
+                <Check className="w-3.5 h-3.5 text-white" />
+              </button>
+            </div>
+          ) : (
+            /* ── DISPLAY MODE ── */
+            <div
+              className="group relative py-1.5 px-3 rounded-xl bg-white/80 backdrop-blur-xs border border-[#DFD1C2] shadow-xs cursor-pointer hover:border-[#C5A880] hover:bg-white/90 transition-all duration-200"
+              onClick={() => { setInputValue(guestName || ''); setIsEditing(true); }}
+              title="Klik untuk ubah nama"
+            >
+              <p className="text-[9px] sm:text-[10px] tracking-wider uppercase text-[#73685E] font-sans font-medium">
+                Kepada Yth. Bapak/Ibu/Saudara/i:
+              </p>
+              <div className="flex items-center justify-center gap-1.5 mt-0.5">
+                <p className={`font-serif font-semibold text-sm sm:text-base truncate ${hasName ? 'text-[#2C241E]' : 'text-[#A89C93] italic'}`}>
+                  {hasName ? guestName : 'Ketuk untuk isi nama Anda'}
+                </p>
+                <Pencil className="w-3 h-3 text-[#A89C93] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Interactive "Buka Undangan" Button */}
